@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const app = express();
 const routes = require('./routes/index');
 const flash = require('connect-flash');
+const session = require('express-session');
 
 app.set('views', path.join(__dirname, "views"));
 app.set('view engine', 'pug');
@@ -13,6 +14,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true}));
 app.use(cookieParser());
 app.use(flash());
+app.use(session({
+  secret: 'dog hero',
+  resave: false,
+  saveUninitialized: true,
+  cookie: {}
+}));
 module.exports = app;
 
 app.use('/', routes);
