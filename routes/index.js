@@ -4,7 +4,10 @@ const pageController = require('../controllers/pageController');
 const applicationsController  = require('../controllers/applicationsController')
 
 router.get('/', pageController.home);
-router.post('/applications', applicationsController.store);
+router.post('/applications',
+  applicationsController.normalizeData,
+  applicationsController.store
+);
 
 module.exports = router;
 
