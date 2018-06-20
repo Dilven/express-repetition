@@ -1,9 +1,16 @@
-"use strict"
+const Application = require('../models/application');
 
 exports.store = (req, res) => {
-  console.log(req.body.first_name)
-  req.flash('form', `${req.body.first_name}, you are true hero`);
-  res.redirect('/');
+  const application = Application.create({
+    'name': req.body.name,
+    'phone': req.body.phone,
+    'message': req.body.message
+  }).then(() => {
+    req.flash('form', `${req.body.first_name}, you are true hero`);
+    res.redirect('/');
+  }).catch((err) => {
+    console.log(err);
+  });
 }
 
 exports.normalizeData = (req, res, next) => {
