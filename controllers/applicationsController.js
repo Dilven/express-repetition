@@ -1,14 +1,18 @@
 const Application = require('../models/application');
 
-exports.store = (req, res, next) => {
-  const application = Application.create({
-    'name': req.body.name,
-    'phone': req.body.phone,
-    'message': req.body.message
-  }).then(() => {
+exports.store =  async (req, res, next) => {
+  try {
+    await Application.create({
+      'name': req.body.name,
+      'phone': req.body.phone,
+      'message': req.body.message
+    })
+  } catch (error) {
+    next(error)
+  }
+  
     req.flash('form', `${req.body.first_name}, you are true hero`);
     res.redirect('/');
-  }).catch(next);
 }
 
 exports.normalizeData = (req, res, next) => {
